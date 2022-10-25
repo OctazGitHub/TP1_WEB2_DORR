@@ -1,0 +1,16 @@
+<div class="container text-center">
+    <h2>Bienvenu sur mon site web
+        <% if (typeof user != undefined){ %>
+            <%= user.nom %>
+            <% } %>
+        </h2>
+    <p><a href="/usagers/login">Se déconneter</a></p>
+    <p>
+        <%- include('./partiels/message.ejs') %>
+    </p>
+    <form action="/usagers/menu">
+        <button type="submit" class="btn btn-primary btn-block">Menu</button>
+    </form>
+</div>
+
+

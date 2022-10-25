@@ -1,0 +1,26 @@
+<div class="container text-center">
+    <h2>Voici la liste des livre...</h2>
+        <h3>Liste des livres</h3>
+        <form action="/usagers/login">
+            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-right-from-bracket "> Se deconnecter</i></button>
+        </form>
+        <br>
+        <form action="/usagers/ajouter">
+            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-plus"> Creez un compte</i></button>
+        </form>
+    <p>
+        <%- include('./partiels/message.ejs') %>
+    </p>
+</div>
+
+<% if (typeof tousLivres != 'undefined'){ %>
+    <% tousLivres.forEach( function(livre){ %>
+        <div class="alert alert-dark" role="alert">
+            <h2>Titre :<%= livre.titre %> </h2>
+            <h3>Auteur :<%= livre.auteur %> </h3>
+            <h3>resumé :<%= livre.resumé %> </h3>
+            <h3>Editeur :<%= livre.éditeur %> </h3>
+            <h3>Prix :<%= livre.prix %>$</h3>
+        </div>
+   <% }) %>
+<% } %>

@@ -1,0 +1,21 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+        <h1 class="text-center mb-3"><i class="fa-brands fa-node-js fa-8x"></i></h1>
+        <p>
+            <%- include('./partiels/message.ejs') %>
+        </p>
+        <form action="/usagers/listeLivres">
+            <button type="submit" class="btn btn-primary btn-lg btn-block w-100">Liste Livre</button>
+        </form>
+        <br>
+        <form action="/usagers/liste">
+            <button type="submit" class="btn btn-primary btn-lg btn-block w-100">Liste Usagers</button>
+        </form>
+        <br>
+        <form action="/usagers/logout">
+            <button type="submit" class="btn btn-primary btn-lg btn-block w-100">Se déconnecter</button>
+        </form>
+    </div>
+    </div>
+</div>

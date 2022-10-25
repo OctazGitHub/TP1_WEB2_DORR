@@ -1,0 +1,30 @@
+<div class="container text-center">
+    <h2>Bonjour 
+        <% if (typeof user != undefined){ %>
+            <%= user.nom %>
+            <% } %>
+        !!</h2>
+        <h3>Liste des usagers</h3>
+    <form action="/usagers/login">
+        <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-right-from-bracket "> Se deconnecter</i></button>
+    </form>
+    <br>
+    <form action="/usagers/ajouter">
+        <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-plus"> Creez un compte</i></button>
+    </form>
+    <p>
+        <%- include('./partiels/message.ejs') %>
+    </p>
+</div>
+<div style="margin-left: 340px">
+<% if (typeof tousUsagers != 'undefined'){ %>
+    <% tousUsagers.forEach( function(user){ %>
+        <div class="alert alert-primary w-75 align-middle" role="alert">
+            <h2>Email :<%= user._id %> </h2>
+            <h2>Nom :<%= user.nom %> </h2>
+            <a href="/usagers/editer/<%=user._id %>"><i class="fa-solid fa-pencil fa-2xl" style="float: right;"></i></a>
+            <a href="/usagers/supprimer/<%=user._id %>"><i class="fa-solid fa-trash fa-2xl" style="float: right;margin-right:50px;"></i></a>
+        </div>
+   <% }) %>
+<% } %>
+</div>
