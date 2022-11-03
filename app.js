@@ -39,28 +39,32 @@ app.use((requete, reponse, next)=>{
     next();
 });
 
-
-
 //Mes routes
 app.use('/',require('./routes/index'));
 app.use('/usagers',require('./routes/usagers'));
-
-
 
 //Mes views
 app.set("views","./views");
 app.set("view engine","ejs");
 app.set('layout','layout');
 
-//Mes statiques
-//A completer
+//ATLAS-----
 
 
+const monngodb_url="mongodb+srv://Raph1:Rafi12345@cluster0.hbcn3fo.mongodb.net/authDB?retryWrites=true&w=majority";
+
+mongoose.connect(monngodb_url, {useNewUrlParser: true,useUnifiedTopology: true}).then(()=>{
+    console.log("mongodb is connected");
+}).catch((error)=>{
+    console.log("mongodb not connected");
+    console.log(error);
+});
+
+//ATLAS----
 
 
-
+/** 
 //MONGODB---------------------
-
 mongoose.connect("mongodb://127.0.0.1/Cours04");
 let db = mongoose.connection;
 db.on("error", (err)=>{
@@ -69,12 +73,9 @@ db.on("error", (err)=>{
 db.on("open",()=> {
     console.log("Connexion a la BD pour les usagers et les livres OK");
 });
-
 //MONGODB--------------------
-
+*/
 
 //create server
-
 app.listen(PORT, console.log("Web démarré sur port :", PORT));
-
 

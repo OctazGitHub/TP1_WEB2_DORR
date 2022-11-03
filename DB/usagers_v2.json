@@ -1,0 +1,115 @@
+[{
+  "_id": "raph@gmail.com",
+  "nom": "raphael",
+  "password": "123"
+},{
+  "_id": "test22email@gmail.com",
+  "nom": "TEST",
+  "password": "$2a$10$dIJnP9jA93Ifw3vyLMdgKeXDolKsj6hBSqFVyGDgQLuv3Fr1qhKae",
+  "date": {
+    "$date": {
+      "$numberLong": "1665508398860"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "test33@outlook.com",
+  "nom": "test3",
+  "password": "$2a$10$TfK/pg3b2Y.MQTi2pRzwQOYJ975meA3SKnq1EETN.odoeI8patGYa",
+  "date": {
+    "$date": {
+      "$numberLong": "1665508398860"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "test4@outlook.com",
+  "nom": "test4",
+  "password": "$2a$10$9CGD7oF6DVVPkgo11zoNm.RH/aaJnQTWLd8oEFdKUnWhneFRWogEi",
+  "date": {
+    "$date": {
+      "$numberLong": "1665508838443"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "test5@outlook.com",
+  "nom": "test5",
+  "password": "$2a$10$qQ6Z6EDR.TNvZdFwO2HHgeHFOzkawP4BIu/BPnG7/fxc8p/QuaYFa",
+  "date": {
+    "$date": {
+      "$numberLong": "1665508897297"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "123@outlook.com",
+  "nom": "test",
+  "password": "$2a$10$D5NphvIpRelieMh9K2T.Lu572T4WCtepd1r0/rCM8ckLaX2qA2Vue",
+  "date": {
+    "$date": {
+      "$numberLong": "1665509100751"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "raph1@gmail.com",
+  "nom": "raphael",
+  "password": "$2a$10$GXIpLDkZq2DVadHd2WhoBOD6GUJhpF2xRtp/GZfKX4DhZCFPggS26",
+  "date": {
+    "$date": {
+      "$numberLong": "1666550099097"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "1234@outlook.com",
+  "nom": "larueb",
+  "password": "$2a$10$Jh1jTChV7QR7GPAHaFe22efxwBewVxOhRj5PlmjsZS26lVq4IH1Be",
+  "date": {
+    "$date": {
+      "$numberLong": "1666560932841"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "test6@outlook.com",
+  "nom": "test6",
+  "password": "$2a$10$B7tKLLwD.v74FrSg6.aAmO9.BUNCujq9tmk.ypnuROsZ6dFPSMTM.",
+  "date": {
+    "$date": {
+      "$numberLong": "1666561767393"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "bonjour1@outlook.com",
+  "nom": "bonjour",
+  "password": "$2a$10$mIyyJRX.MMNhX8hRRH6rmuZNORhSOVnMn74QA3eHENg/O67MfJ/2u",
+  "date": {
+    "$date": {
+      "$numberLong": "1666562020767"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "teste11mail@gmail.com",
+  "nom": "TEST11",
+  "password": "$2a$10$QXroo5sd0ZJJVVaBG9o.8Od10Q3dpeH7LaPTBE.rdBHcmARf.fvRO",
+  "date": {
+    "$date": {
+      "$numberLong": "1666577992618"
+    }
+  },
+  "__v": 0
+},{
+  "_id": "img22@img.com",
+  "nom": "imag22eDeProfil",
+  "password": "$2a$10$VN.HvhI4qP2c8WWKgNmoDeShYr.MqYE4pV2UBZon72UTHYbgWQz/u",
+  "date": {
+    "$date": {
+      "$numberLong": "1666578247733"
+    }
+  },
+  "__v": 0
+}]

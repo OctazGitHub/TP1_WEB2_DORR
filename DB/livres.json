@@ -1,0 +1,44 @@
+[{
+  "_id": "9782896152254",
+  "titre": "Un café avec marie",
+  "auteur": "Serge Bouchard",
+  "resumé": "Soixante-dix textes brefs, d'abord lus au micro de l'émission C'est fou..., qui forme la suite de L'Allume-cigarette de la Chrysler noire, le plus récent succès de Serge Bouchard. Le regard si singulier d'un des plus grands observateurs de notre vie quotidienne, de notre passé et de la nature qui nous entoure. Un recueil en hommage à sa compagne défunte, Marie Lévesque, qui se clôt par un texte in…",
+  "éditeur": "BOREAL",
+  "prix": "25,95"
+},{
+  "_id": {
+    "$oid": "63484e47eef3f3d11245e52b"
+  },
+  "titre": "Mein kampf/Mon combat",
+  "auteur": "Adolf Hitler",
+  "resumé": "Sujet fascisme pas de Description disponible",
+  "éditeur": "NOUVELLES ED. LATINES",
+  "prix": "72,95"
+},{
+  "_id": {
+    "$oid": "63484ebceef3f3d11245e52c"
+  },
+  "titre": "Le Journal d'Anne Frank",
+  "auteur": "Anne Frank",
+  "resumé": "La version du journal retouchée par A. Frank dans les derniers mois de sa vie est accompagnée d'extraits de sa première rédaction.",
+  "éditeur": "LE LIVRE DE POCHE",
+  "prix": "13,95"
+},{
+  "_id": {
+    "$oid": "63484f62eef3f3d11245e52d"
+  },
+  "titre": "LE MONDE SELON KIM JONG-UN",
+  "auteur": "Dorian Malovic",
+  "resumé": "Une guerre nucléaire va-t-elle éclater dans la péninsule coréenne ? Depuis l'arrivée de Donald Trump à la Maison-Blanche, le péril d'un conflit apocalyptique avec la Corée du Nord, maîtresse du feu nucléaire, n'a jamais été aussi palpable. Les États-Unis oseront-ils la frapper militairement, au risque de déclencher des représailles aux conséquences incalculables pour toute la planète ?",
+  "éditeur": "Amazon",
+  "prix": "28,68"
+},{
+  "_id": {
+    "$oid": "63484fb6eef3f3d11245e52e"
+  },
+  "titre": "Harry Potter Et Les Reliques De La Mort",
+  "auteur": "Joanne Kathleen Rowling ",
+  "resumé": "Il était une fois, il y a dix-sept ans, une jeune Anglaise qui, après de brillantes études littéraires, se demande par où entrer dans la vie active Enseigner ? Travailler pour une organisation humanitaire ? (Et, rêve très intime : devenir écrivain ? ...)",
+  "éditeur": "GALLMARD",
+  "prix": "19,99"
+}]

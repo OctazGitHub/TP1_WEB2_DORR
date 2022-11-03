@@ -1,4 +1,4 @@
-
+<%- include('./partiels/HeaderMenu.ejs') %>
 <div class="row mt-5">
     <div class="col-md-6 m-auto">
         <div class="card card-body">
@@ -31,6 +31,7 @@
                 value="<%= typeof password2 != 'undefined' ? password2:''%>"
                 placeholder="Confirmez le mot de passe">
             </div>
+            <br>
             <button type="submit" class="btn btn-primary btn-block">Créer le compte</button>
         </form>
     </div>
