@@ -1,0 +1,49 @@
+
+<%- include('./partiels/HeaderMenu.ejs') %>
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+        <h1 class="text-center mb-3">Modifier un livre de la BD</h1>
+        <p>
+            <%- include('./partiels/message.ejs') %>
+        </p>
+        <form action="/usagers/ajouterLivres" method="POST">
+            <div class="form-group">
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" id="titre" class="form-control"
+                    value="<%= typeof titre != 'undefined' ? titre :livre.titre %>"
+                    >
+            </div>
+            <div class="form-group">
+                <label for="auteur">Auteur</label>
+                <input type="text" name="auteur" id="auteur" class="form-control"
+                    value="<%= typeof auteur != 'undefined' ? auteur :livre.auteur %>"
+                    >
+            </div>
+            <div class="form-group">
+                <label for="Prix">Prix</label>
+                <input type="number" name="prix" id="prix" class="form-control"
+                value="<%= typeof prix != 'undefined' ? prix:livre.prix %>"
+                >
+            </div>
+            <div class="form-group">
+                <label for="éditeur">Éditeur</label>
+                <input type="text" name="éditeur" id="éditeur" class="form-control"
+                value="<%= typeof éditeur != 'undefined' ? éditeur:livre.éditeur %>"
+                >
+            </div>
+            <div class="form-group">
+                <label for="resumé">Résumé du livres:</label>
+                <br>
+                <textarea type="text" name="resumé" id="resumé" class="form-control"
+                style="height:100px"
+                value="<%= typeof resumé != 'undefined' ? resumé:livre.resumé %>"
+                >
+                </textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary btn-block">Ajouter le livre</button>
+        </form>
+    </div>
+    </div>
+</div>

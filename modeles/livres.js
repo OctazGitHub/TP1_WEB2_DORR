@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 //_id,titre,auteur,résumé,éditeur,pages,langue,date,prix
 
 let schemaLivre = mongoose.Schema( {
+    _id:{type: String,required: false},
     titre:{type:String, required:true},
     auteur:{type:String, required:true},
     resumé:{type:String, required:true},
@@ -13,8 +14,8 @@ let schemaLivre = mongoose.Schema( {
 
 let Livres = module.exports = mongoose.model("livres",schemaLivre);
 
-module.exports.getLivres=(callback,limit)=>{
-    Livres.find(callback).limit(limit);
+module.exports.getLivres=(callback)=>{
+    Livres.find(callback)
 };
 
 module.exports.getLivreById = (idLivre, callback) => {

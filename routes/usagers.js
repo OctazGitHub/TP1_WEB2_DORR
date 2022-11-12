@@ -61,6 +61,7 @@ router.get('/liste',(requete, reponse)=>{
     });
 });
 
+//modif usager
 router.get("/editer/:email", estAuthentifie, (requete, reponse) => {
     _id = requete.params.email;
   
@@ -124,6 +125,69 @@ router.post("/editer/:email", (requete, reponse) => {
     })
   });
 
+//modif livres
+router.get("/editerLivres/:_id", estAuthentifie, (requete, reponse) => {
+    _id = requete.params._id;
+  
+    Livres.findById({_id}).then((livre) => {
+      if (livre) {
+        console.log(livre)
+        reponse.render("editerLivres", { livre });
+      }
+      Livres.find({}, (err, tousLivres) => {
+        reponse.render("listeLivres", {
+          livre: requete.livre,
+          tousUsagers: tousLivres,
+        })
+      });
+    })
+  });
+
+router.post("/editerLivres/:_id", (requete, reponse) => {
+  _id = requete.params._id;
+  Livres.findById({_id}).then((livre) => {
+      console.log(livre);
+      livre.deleteOne()
+      const {titre, auteur, resumé, éditeur, prix} = requete.body;
+      let erreurs = [];
+  
+      if(!titre || !auteur || !resumé || !éditeur|| !prix ){
+        erreurs.push({msg:"Remplir tous les champs"});
+      }
+      if(erreurs.length > 0){
+        reponse.render('ajouterLivres', {
+          titre, 
+          auteur, 
+          resumé, 
+          éditeur, 
+          prix
+        });
+    //Ajout a la BD
+    const nouveauLivres = Livres({_id, titre, auteur, resumé, éditeur, prix})
+    .then(livre => {
+        if(livre) {
+        erreurs.push({ msg : "Ce livre existe deja"});
+        reponse.render('editerLivres', {
+          _id,
+          titre, 
+          auteur, 
+          resumé, 
+          éditeur, 
+          prix
+           });
+        }else{
+            const newLivres= new Livres({titre, auteur, resumé, éditeur, prix}); 
+                newLivres.save()
+                .then(livre =>{
+                    requete.flash('success_msg','Livre modifier avec succés');
+                    reponse.redirect('/usagers/editerLivres');
+                })
+                 .catch(err => console.log(err));
+            }})
+        }
+  })});
+
+//SUPP usagers  
 router.get("/supprimer/:email", (requete, reponse) => {
     _id = requete.params.email;
     Usagers.findById(_id).then((user) => {
@@ -142,7 +206,6 @@ router.get("/supprimer/:email", (requete, reponse) => {
     })
   });
 
-
 router.post("/supprimer/:email", (requete, reponse) => {
     Usagers.findById(_id).then((usager) => {
       usager.deleteOne().then((user) => {
@@ -155,6 +218,87 @@ router.post("/supprimer/:email", (requete, reponse) => {
     })
   })
 
+//SUPP livres
+router.get("/supprimerLivres/:_id", (requete, reponse) => {
+  _id = requete.params._id;
+  Livres.findById(_id).then((livre) => {
+    if (livre) {
+      reponse.render("supprimerLivres", {livre});
+    } else {
+      Livres.find({}, (err, tousLivres) => {
+        //callback necessaire
+        if (err) throw err;
+        reponse.render("listeLivres", {
+          livre: requete.livre,
+          tousLivres: tousLivres,
+        })
+      })
+    }
+  })
+});
+
+router.post("/supprimerLivres/:_id", (requete, reponse) => {
+  Livres.findById(_id).then((livres) => {
+    livres.deleteOne().then((livre) => {
+      requete.flash(
+        "success_msg",
+        "Livre Supprimer avec succes"
+      );
+      reponse.redirect("./listeLivres");
+    })
+  })
+})
+
+//ajouter pour livres
+router.get("/ajouterLivres",(requete, reponse)=> {
+  reponse.render('ajouterLivres');
+});
+
+router.post("/ajouterLivres",(requete, reponse)=> {
+const mongoose= require('mongoose');
+const { titre, auteur, resumé, éditeur, prix}=requete.body;
+let erreurs = [];
+
+if(!titre || !auteur || !resumé || !éditeur|| !prix ){
+  erreurs.push({msg:"Remplir tous les champs"});
+}
+if(erreurs.length > 0){
+  reponse.render('ajouterLivres', {
+    titre, 
+    auteur, 
+    resumé, 
+    éditeur, 
+    prix
+  });
+}else{
+              // creation d'un _id
+              var _id = new mongoose.mongo.ObjectId();
+  //Ajout a la BD
+  Livres.findById(_id)
+  .then(livre => {
+      if(livre) {
+      erreurs.push({ msg : "Ce livre existe deja"});
+      reponse.render('ajouterLivres', {
+        titre, 
+        auteur, 
+        resumé, 
+        éditeur, 
+        prix
+         });
+      }else{
+
+          const newLivres= new Livres({_id ,titre , auteur, resumé, éditeur, prix}); 
+              newLivres.save()
+              .then(livre =>{
+                  requete.flash('success_msg','Livre ajouté avec succés');
+                  reponse.redirect('/usagers/listeLivres');
+              })
+               .catch(err => console.log(err));
+          }})
+      }
+});
+
+//ajouter pour usagers
 router.get("/ajouter",(requete, reponse)=> {
         reponse.render('ajouter');
     });

@@ -1,0 +1,47 @@
+<%- include('./partiels/HeaderMenu.ejs') %>
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+        <h1 class="text-center mb-3"><i class="fa-solid fa-trash"></i>Supprimer un livre</h1>
+        <p>
+            <%- include('./partiels/message.ejs') %>
+        </p>
+        <form action="/usagers/supprimerLivres/:_id" method="POST">
+            <div class="form-group">
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" id="titre" class="form-control"
+                    value="<%= typeof titre != 'undefined' ? titre :livre.titre %>"
+                    disabled>
+            </div>
+            <div class="form-group">
+                <label for="auteur">Auteur</label>
+                <input type="text" name="auteur" id="auteur" class="form-control"
+                    value="<%= typeof auteur != 'undefined' ? auteur :livre.auteur %>"
+                    disabled>
+            </div>
+            <div class="form-group">
+                <label for="Prix">Prix</label>
+                <input type="number" name="prix" id="prix" class="form-control"
+                value="<%= typeof prix != 'undefined' ? prix:livre.prix %>"
+                disabled>
+            </div>
+            <div class="form-group">
+                <label for="éditeur">Éditeur</label>
+                <input type="text" name="éditeur" id="éditeur" class="form-control"
+                value="<%= typeof éditeur != 'undefined' ? éditeur:livre.éditeur %>"
+                disabled>
+            </div>
+            <div class="form-group">
+                <label for="resumé">Résumé du livres:</label>
+                <br>
+                <textarea type="text" name="resumé" id="resumé" class="form-control"
+                style="height:100px"
+                value="<%= typeof resumé != 'undefined' ? resumé:livre.resumé %>"
+                disabled>
+                </textarea>
+            </div>>
+            <button type="submit" class="btn btn-primary btn-block">Supprimer</button>
+        </form>
+    </div>
+    </div>
+</div>
