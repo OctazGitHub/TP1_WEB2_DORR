@@ -1,11 +1,13 @@
 
 <%- include('./partiels/HeaderMenu.ejs') %>
+<%- include('./partiels/Roles.ejs') %>
 <div class="row mt-5">
     <div class="col-md-6 m-auto">
         <div class="card card-body">
         <h1 class="text-center mb-3">Modifier un livre de la BD</h1>
         <p>
             <%- include('./partiels/message.ejs') %>
+
         </p>
         <form action="/usagers/ajouterLivres" method="POST">
             <div class="form-group">
@@ -40,6 +42,12 @@
                 value="<%= typeof resumé != 'undefined' ? resumé:livre.resumé %>"
                 >
                 </textarea>
+            </div>
+            <div class="form-group">
+                <label for="fichierImage">URL de l'image de couverture</label>
+                <input type="text" name="fichierImage" id="fichierImage" class="form-control"
+                value="<%= typeof fichierImage != 'undefined' ? Url:livre.fichierImage %>"
+                >
             </div>
             <br>
             <button type="submit" class="btn btn-primary btn-block">Ajouter le livre</button>

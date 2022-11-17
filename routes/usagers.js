@@ -5,7 +5,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const Usagers = require('../modeles/usagers');
 const Livres = require('../modeles/livres');
-const {estAuthentifie} = require('../config/auth');
+const {estAuthentifie,estAdmin} = require('../config/auth');
 
 
 
@@ -23,7 +23,7 @@ router.get("/logout",(requete,reponse)=>{
 
 router.post("/login",(requete, reponse, next)=> {
     passport.authenticate('local',{
-        successRedirect:"/menu",
+        successRedirect:"/usagers/menu",
         badRequestMessage:"Remplir tous les champs",
         failureRedirect:"/usagers/login",
         failureFlash: true,
@@ -32,12 +32,12 @@ router.post("/login",(requete, reponse, next)=> {
 });
 
 router.get("/menu", estAuthentifie,(requete, reponse) => {
-    reponse.render('menu')
+    reponse.render('menu',{user: requete.user});
    });
    
 
-router.get("/menu", estAuthentifie,(requete, reponse) => {
- reponse.render('menu')
+router.post("/menu", estAuthentifie,(requete, reponse) => {
+  reponse.render('menu',{user: requete.user});
 });
 
 router.get("/listeLivres", estAuthentifie,(requete, reponse) => {
@@ -45,7 +45,8 @@ router.get("/listeLivres", estAuthentifie,(requete, reponse) => {
         if(err)throw err;
         reponse.render('listeLivres',{
             livre: requete.livre,
-            tousLivres: tousLivres
+            tousLivres: tousLivres,
+            user: requete.user
         });
     });
 });
@@ -82,10 +83,10 @@ router.post("/editer/:email", (requete, reponse) => {
     Usagers.findById(_id).then((usager) => {
       console.log(usager);
       usager.deleteOne()
-      const { nom, _id, password, password2 } = requete.body;
+      const { nom, _id, password, password2, roles} = requete.body;
       let erreurs = [];
   
-      if (!nom || !_id  || !password || !password2) {
+      if (!nom || !_id  || !password || !password2 || !roles) {
         erreurs.push({ msg: "Remplir tout les champs" });
       }
       if (password.length < 4) {
@@ -102,6 +103,7 @@ router.post("/editer/:email", (requete, reponse) => {
           _id,
           password,
           password2,
+          roles
         });
       } else {
         const nouveauUsager = Usagers({ nom, _id, password });
@@ -132,10 +134,12 @@ router.get("/editerLivres/:_id", estAuthentifie, (requete, reponse) => {
     Livres.findById({_id}).then((livre) => {
       if (livre) {
         console.log(livre)
-        reponse.render("editerLivres", { livre });
+        reponse.render("editerLivres", { livre,
+          user: requete.user });
       }
       Livres.find({}, (err, tousLivres) => {
         reponse.render("listeLivres", {
+          user: requete.user,
           livre: requete.livre,
           tousUsagers: tousLivres,
         })
@@ -148,7 +152,7 @@ router.post("/editerLivres/:_id", (requete, reponse) => {
   Livres.findById({_id}).then((livre) => {
       console.log(livre);
       livre.deleteOne()
-      const {titre, auteur, resumé, éditeur, prix} = requete.body;
+      const {titre, auteur, resumé, éditeur, prix, fichierImage} = requete.body;
       let erreurs = [];
   
       if(!titre || !auteur || !resumé || !éditeur|| !prix ){
@@ -156,27 +160,17 @@ router.post("/editerLivres/:_id", (requete, reponse) => {
       }
       if(erreurs.length > 0){
         reponse.render('ajouterLivres', {
+          user: requete.user,
           titre, 
           auteur, 
           resumé, 
           éditeur, 
-          prix
+          prix,
+          fichierImage
         });
     //Ajout a la BD
-    const nouveauLivres = Livres({_id, titre, auteur, resumé, éditeur, prix})
-    .then(livre => {
-        if(livre) {
-        erreurs.push({ msg : "Ce livre existe deja"});
-        reponse.render('editerLivres', {
-          _id,
-          titre, 
-          auteur, 
-          resumé, 
-          éditeur, 
-          prix
-           });
         }else{
-            const newLivres= new Livres({titre, auteur, resumé, éditeur, prix}); 
+            const newLivres= new Livres({_id, titre, auteur, resumé, éditeur, prix, fichierImage}); 
                 newLivres.save()
                 .then(livre =>{
                     requete.flash('success_msg','Livre modifier avec succés');
@@ -185,7 +179,7 @@ router.post("/editerLivres/:_id", (requete, reponse) => {
                  .catch(err => console.log(err));
             }})
         }
-  })});
+  );
 
 //SUPP usagers  
 router.get("/supprimer/:email", (requete, reponse) => {
@@ -223,7 +217,7 @@ router.get("/supprimerLivres/:_id", (requete, reponse) => {
   _id = requete.params._id;
   Livres.findById(_id).then((livre) => {
     if (livre) {
-      reponse.render("supprimerLivres", {livre});
+      reponse.render("supprimerLivres", {livre, user: requete.user});
     } else {
       Livres.find({}, (err, tousLivres) => {
         //callback necessaire
@@ -231,6 +225,7 @@ router.get("/supprimerLivres/:_id", (requete, reponse) => {
         reponse.render("listeLivres", {
           livre: requete.livre,
           tousLivres: tousLivres,
+          user: requete.user,
         })
       })
     }
@@ -251,12 +246,12 @@ router.post("/supprimerLivres/:_id", (requete, reponse) => {
 
 //ajouter pour livres
 router.get("/ajouterLivres",(requete, reponse)=> {
-  reponse.render('ajouterLivres');
+  reponse.render('ajouterLivres',{user: requete.user});
 });
 
 router.post("/ajouterLivres",(requete, reponse)=> {
 const mongoose= require('mongoose');
-const { titre, auteur, resumé, éditeur, prix}=requete.body;
+const { titre, auteur, resumé, éditeur, prix, fichierImage}=requete.body;
 let erreurs = [];
 
 if(!titre || !auteur || !resumé || !éditeur|| !prix ){
@@ -268,11 +263,13 @@ if(erreurs.length > 0){
     auteur, 
     resumé, 
     éditeur, 
-    prix
+    prix,
+    fichierImage,
+    user: requete.user
   });
 }else{
-              // creation d'un _id
-              var _id = new mongoose.mongo.ObjectId();
+  // creation d'un _id
+  var _id = new mongoose.mongo.ObjectId();
   //Ajout a la BD
   Livres.findById(_id)
   .then(livre => {
@@ -283,11 +280,12 @@ if(erreurs.length > 0){
         auteur, 
         resumé, 
         éditeur, 
-        prix
+        prix,
+        fichierImage
          });
       }else{
 
-          const newLivres= new Livres({_id ,titre , auteur, resumé, éditeur, prix}); 
+          const newLivres= new Livres({_id ,titre , auteur, resumé, éditeur, prix, fichierImage}); 
               newLivres.save()
               .then(livre =>{
                   requete.flash('success_msg','Livre ajouté avec succés');
@@ -300,14 +298,18 @@ if(erreurs.length > 0){
 
 //ajouter pour usagers
 router.get("/ajouter",(requete, reponse)=> {
-        reponse.render('ajouter');
+        reponse.render('ajouter',{user: requete.user});
     });
 
 router.post("/ajouter",(requete, reponse)=> {
-    const { nom, _id, password, password2}=requete.body;
+    const { nom, _id, password, password2, fichierImage, rolesAdmin,rolesGestion, roles}=requete.body;
     let erreurs = [];
-
-    if(!nom || !_id || !password || !password2 ){
+    let tabRoles=["normal"]
+    if(rolesAdmin)
+      tabRoles.push('admin')
+    if(rolesGestion)
+      tabRoles.push('gestion');
+    if(!nom || !_id || !password || !password2 || !fichierImage ){
         erreurs.push({msg:"Remplir tous les champs"});
     }
     if(password.length < 4){
@@ -322,10 +324,13 @@ router.post("/ajouter",(requete, reponse)=> {
             nom,
             _id,
             password,
-            password2
+            password2,
+            fichierImage,
+            user: requete.user,
         });
     }else{
         //Ajout a la BD
+        console.log(roles)
         Usagers.findById(_id)
         .then(usager => {
             if(usager) {
@@ -335,10 +340,13 @@ router.post("/ajouter",(requete, reponse)=> {
                 nom,
                 _id,
                 password,
-                password2
+                password2,
+                fichierImage,
+                user: requete.user,
                });
             }else{
-                const newUsagers= new Usagers({nom,_id,password});
+                const newUsagers= new Usagers({nom,_id,password,fichierImage,roles});
+                newUsagers.roles = tabRoles
                 //ici on va hacher le mot de passe
                 bcrypt.genSalt(10,(err, salt)=>{
                     if(err) throw err;

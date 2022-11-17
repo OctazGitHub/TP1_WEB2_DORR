@@ -1,4 +1,11 @@
+<style>
+    .imageDeProfil{
+        height: 100px;
+        width: 100px;
+    }
+</style>
 <%- include('./partiels/HeaderMenu.ejs') %>
+<%- include('./partiels/Roles.ejs') %>
 <div class="container text-center">
     <h2>Bonjour 
         <% if (typeof user != undefined){ %>
@@ -15,14 +22,17 @@
     </form>
     <p>
         <%- include('./partiels/message.ejs') %>
+
     </p>
 </div>
 <div style="margin-left: 340px">
 <% if (typeof tousUsagers != 'undefined'){ %>
     <% tousUsagers.forEach( function(user){ %>
         <div class="alert alert-primary w-75 align-middle" role="alert">
+            <img class="imageDeProfil" src="<%= user.fichierImage %>" alt="ImageDeProfil">
             <h2>Email :<%= user._id %> </h2>
             <h2>Nom :<%= user.nom %> </h2>
+            <h2>Roles :<%= user.roles %> </h2>
             <a href="/usagers/editer/<%=user._id %>"><i class="fa-solid fa-pencil fa-2xl" style="float: right;"></i></a>
             <a href="/usagers/supprimer/<%=user._id %>"><i class="fa-solid fa-trash fa-2xl" style="float: right;margin-right:50px;"></i></a>
         </div>

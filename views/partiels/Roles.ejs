@@ -1,0 +1,11 @@
+<form>
+    <button type="submit" class="btn btn-primary btn-block" disabled>
+       
+
+             <%if(typeof user != undefined){ %>
+              <h2>  <%= user.roles %> </h2>
+             <% }else{ %>
+             </h2> Pas connecté </h2>
+                <% } %>
+            </button>
+</form>

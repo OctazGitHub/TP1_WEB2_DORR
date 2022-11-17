@@ -1,10 +1,12 @@
 <%- include('./partiels/HeaderMenu.ejs') %>
+<%- include('./partiels/Roles.ejs') %>
 <div class="row mt-5">
     <div class="col-md-6 m-auto">
         <div class="card card-body">
         <h1 class="text-center mb-3"><i class="fa-solid fa-trash"></i>Supprimer un compte</h1>
         <p>
             <%- include('./partiels/message.ejs') %>
+
         </p>
         <form action="/usagers/supprimer/:email" method="POST">
             <div class="form-group">

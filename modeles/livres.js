@@ -9,10 +9,11 @@ let schemaLivre = mongoose.Schema( {
     auteur:{type:String, required:true},
     resumé:{type:String, required:true},
     éditeur:{type:String, required:true},
-    prix:{type:String, required:true}
+    prix:{type:String, required:true},
+    fichierImage:{type: String,required:false}
  });
 
-let Livres = module.exports = mongoose.model("livres",schemaLivre);
+let Livres = module.exports = mongoose.model("livres2",schemaLivre);
 
 module.exports.getLivres=(callback)=>{
     Livres.find(callback)

@@ -1,4 +1,11 @@
+<style>
+    .imageDeCouverture{
+        height: 150px;
+        width: 100px;
+    }
+</style>
 <%- include('./partiels/HeaderMenu.ejs') %>
+<%- include('./partiels/Roles.ejs') %>
 <div class="container text-center">
     <h2>Voici la liste des livre...</h2>
         <h3>Liste des livres</h3>
@@ -11,11 +18,13 @@
         </form>
     <p>
         <%- include('./partiels/message.ejs') %>
+
     </p>
 </div>
 <% if (typeof tousLivres != 'undefined'){ %>
     <% tousLivres.forEach( function(livre){ %>
         <div class="alert alert-dark" role="alert">
+            <img class="imageDeCouverture" src="<%= livre.fichierImage %>" alt="ImageDeCouverture">
             <h2>Titre :<%= livre.titre %> </h2>
             <h3>Auteur :<%= livre.auteur %> </h3>
             <h3>resumé :<%= livre.resumé %> </h3>

@@ -20,9 +20,17 @@ date:{
     type:Date,
     required: true,
     default: Date.now()
+},
+roles:{
+    required:true,
+    type: Array,
+},
+fichierImage:{
+    type: String,
+    required:false,
 }
 });
 
 
 
-let Usagers = module.exports = mongoose.model('usagers_v2',schemaUsager);
+let Usagers = module.exports = mongoose.model('usagers_v1',schemaUsager);

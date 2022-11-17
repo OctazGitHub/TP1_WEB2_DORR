@@ -1,4 +1,5 @@
 <%- include('./partiels/HeaderMenu.ejs') %>
+<%- include('./partiels/Roles.ejs') %>
 <div class="row mt-5">
     <div class="col-md-6 m-auto">
         <div class="card card-body">
@@ -30,6 +31,20 @@
                 <input type="password" name="password2" id="password2" class="form-control"
                 value="<%= typeof password2 != 'undefined' ? password2:''%>"
                 placeholder="Confirmez le mot de passe">
+            </div>
+            <div class="form-group">
+                <label for="fichierImage">Url de l'image de profil</label>
+                <input type="fichierImage" name="fichierImage" id="fichierImage" class="form-control"
+                value="<%= typeof fichierImage != 'undefined' ? fichierImage:''%>"
+                placeholder="URL de l'image">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="rolesAdmin" name="rolesAdmin" value="admin" class="form-check-input">
+                <label for="rolesAdmin">admin</label><br>
+                <input type="checkbox" id="rolesNormal" name="rolesNormal" value="normal" checked disabled class="form-check-input">
+                <label for="rolesNormal">normal</label><br>
+                <input type="checkbox" id="rolesGestion" name="rolesGestion" value="gestion" class="form-check-input">
+                <label for="rolesGestion">gestion</label><br>
             </div>
             <br>
             <button type="submit" class="btn btn-primary btn-block">Créer le compte</button>
