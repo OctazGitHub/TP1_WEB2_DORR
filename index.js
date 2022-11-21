@@ -1,80 +1,81 @@
-const http = require('http');
-const path = require('path');
-const fs=require('fs');
-const url= require('url');
+const express = require('express');
+const app = express();
 const PORT = process.env.PORT || 8000;
+const expressLayouts = require('express-ejs-layouts');
+const flash = require('connect-flash'); 
+const session = require('express-session');
+const passport = require('passport');
+const mongoose = require("mongoose");
 
-//REQUIRE de tout les éléments besoin
+//INSERER CONFIG DE PASSPORT;;;
+require('./config/passport')(passport);
 
-const serveur=http.createServer((requete, reponse)=>{
-    if (requete.url === '/'){
-        let fileName= path.join(__dirname, 'views', 'login.ejs');
-        afficherPageWeb(fileName, reponse,false);
-        //Login MAIN
-    }else{
-        let fileName = path.join(__dirname, 'views', requete.url);
-        afficherPageWeb(fileName, reponse,false);
-        //Anything else
-    }
+
+//LAYOUTS-EJS
+app.use(expressLayouts);
+
+//Récupérer POST (dans les requete.body)
+app.use(express.urlencoded( { extended:false } ) );
+
+//Création de la session express
+app.use(session({
+    secret:'HEHE',
+    resave: true,
+    saveUninitialized: true
+})); 
+
+//Pour initialisez passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Connexion a flash
+app.use(flash());
+
+//quelques variables globales pour le bon fonctionnement de l'authentification
+app.use((requete, reponse, next)=>{
+    reponse.locals.success_msg = requete.flash('success_msg');
+    reponse.locals.erreur_msg = requete.flash("erreur_msg");
+    reponse.locals.erreur_passport = requete.flash('error');
+    next();
 });
-serveur.listen(PORT , ()=> console.log(`le service web est démarré sur le PORT: ${PORT}`));
+
+//Mes routes
+app.use('/',require('./routes/index'));
+app.use('/usagers',require('./routes/usagers'));
+
+//Mes views
+app.set("views","./views");
+app.set("view engine","ejs");
+app.set('layout','layout');
+
+//ATLAS-----
 
 
+const monngodb_url="mongodb+srv://Raph1:Rafi12345@cluster0.hbcn3fo.mongodb.net/authDB?retryWrites=true&w=majority";
 
-function obtenirTypeFichier(nomFichier) {
-    //Afficher le bon type du  fichier
-    const typeDeFichier = path.extname(nomFichier);
-    let typeContenu = "text/html"; //default type de contenu
-    switch (typeDeFichier) {
-      case ".js":
-        typeContenu = "text/javascript";
-        break;
-      case ".css":
-        typeContenu = "text/css";
-        break;
-      case ".json":
-        typeContenu = "application/json";
-        break;
-      case ".png":
-        typeContenu = "image/png";
-        break;
-      case ".jpg":
-        typeContenu = "image/jpg";
-        break;
-      case ".gif":
-        typeContenu = "image/gif";
-        break;
-    }
-    return typeContenu;
-  }
+mongoose.connect(monngodb_url, {useNewUrlParser: true,useUnifiedTopology: true}).then(()=>{
+    console.log("mongodb is connected");
+}).catch((error)=>{
+    console.log("mongodb not connected");
+    console.log(error);
+});
+
+//ATLAS----
 
 
-function afficherPageWeb(nomFichier, reponse,personne){
-    const typeContenu = obtenirTypeFichier(nomFichier);
-    fs.readFile(nomFichier, 'utf-8',
-    (err, contenu)=>{
-                if (err) {
-            //Si une Erreur
-            if (err.code === "ENOENT") {
-              //ENOENT => Error, No Entry
-              console.log( `Page web introuvable`, nomFichier );
-              reponse.writeHead(404, { "Content-Type": "text/html" });
-              reponse.write(`<h1>Page Introuvable</h1>`);
-              reponse.end();
-            } else {
-              reponse.writeHead(500, { "Content-Type": "text/html" });
-              reponse.write(`<h1>Erreur du serveur code: ${err.code}</h1>`);
-              reponse.end();
-            }
-        }else{
-            reponse.writeHead(200,{ 'Content-type':obtenirTypeFichier(nomFichier)})
-                if(personne){
-                        contenu=contenu.replace(/_nom_nom/,personne.nom);
-                        contenu=contenu.replace(/_login_login/,personne.login)
-                }
-            reponse.write(contenu);
-            reponse.end();
-        }
-    }
-    )
-}
+/** 
+//MONGODB---------------------
+mongoose.connect("mongodb://127.0.0.1/Cours04");
+let db = mongoose.connection;
+db.on("error", (err)=>{
+    console.error("erreur de BD pour les usagers et livres", err);
+});
+db.on("open",()=> {
+    console.log("Connexion a la BD pour les usagers et les livres OK");
+});
+//MONGODB--------------------
+*/
+
+//create server
+app.listen(PORT, console.log("Web démarré sur port :", PORT));
+
