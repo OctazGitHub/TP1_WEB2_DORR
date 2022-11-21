@@ -7,10 +7,7 @@ const PORT = process.env.PORT || 8000;
 //REQUIRE de tout les éléments besoin
 
 const serveur=http.createServer((requete, reponse)=>{
-    if(requete.url ==='/favicon.ico'){
-        reponse.end();
-        //Controle ERREUR /favicon.ico
-    }else if (requete.url === '/'){
+    if (requete.url === '/'){
         let fileName= path.join(__dirname, 'views', 'login.ejs');
         afficherPageWeb(fileName, reponse,false);
         //Login MAIN
