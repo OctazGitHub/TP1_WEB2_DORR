@@ -52,7 +52,7 @@ router.get("/listeLivres", estAuthentifie,(requete, reponse) => {
 });
 
 
-router.get('/liste',(requete, reponse)=>{
+router.get('/liste',estAdmin,(requete, reponse)=>{
     Usagers.find({},(err, tousUsagers)=>{
         if(err)throw err;
         reponse.render('listeUsagers',{
@@ -63,7 +63,7 @@ router.get('/liste',(requete, reponse)=>{
 });
 
 //modif usager
-router.get("/editer/:email", estAuthentifie, (requete, reponse) => {
+router.get("/editer/:email", estAdmin, (requete, reponse) => {
     _id = requete.params.email;
   
     Usagers.findById(_id).then((user) => {
@@ -182,7 +182,7 @@ router.post("/editerLivres/:_id", (requete, reponse) => {
   );
 
 //SUPP usagers  
-router.get("/supprimer/:email", (requete, reponse) => {
+router.get("/supprimer/:email",estAdmin, (requete, reponse) => {
     _id = requete.params.email;
     Usagers.findById(_id).then((user) => {
       if (user) {
@@ -297,7 +297,7 @@ if(erreurs.length > 0){
 });
 
 //ajouter pour usagers
-router.get("/ajouter",(requete, reponse)=> {
+router.get("/ajouter", estAdmin,(requete, reponse)=> {
         reponse.render('ajouter',{user: requete.user});
     });
 
@@ -330,7 +330,6 @@ router.post("/ajouter",(requete, reponse)=> {
         });
     }else{
         //Ajout a la BD
-        console.log(roles)
         Usagers.findById(_id)
         .then(usager => {
             if(usager) {
