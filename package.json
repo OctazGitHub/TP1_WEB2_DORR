@@ -2,10 +2,10 @@
   "name": "cours04",
   "version": "1.0.0",
   "description": "Cours04 2022-10-05",
-  "main": "index.js",
+  "main": "TP2.js",
   "scripts": {
-    "start": "node,bootstrap",
-    "dev": "nodemon index.js"
+    "start": "node TP2.js",
+    "dev": "nodemon TP2.js"
   },
   "keywords": [
     "BOOTSTRAP..."
