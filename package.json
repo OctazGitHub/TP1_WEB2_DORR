@@ -4,7 +4,7 @@
   "description": "Cours04 2022-10-05",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon,bootstrap",
+    "start": "node,bootstrap",
     "dev": "nodemon index.js"
   },
   "keywords": [
