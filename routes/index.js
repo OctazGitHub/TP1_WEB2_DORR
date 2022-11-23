@@ -5,10 +5,9 @@ const router = express.Router();
 
 //ajout des config d'auth globable
 
-router.get("/",(requete, reponse)=> reponse.send("Page d'acceuil?essaye menu aulieux :)"));
-router.get("/index", estAuthentifie, (requete, reponse)=>{
-    console.log(requete.user)
-    reponse.render('index',{user: requete.user});
+
+router.get("/",(requete, reponse)=>{
+    reponse.render('index');
 });
 router.get("/admin", (requete, reponse)=>{
     console.log(requete.user)
